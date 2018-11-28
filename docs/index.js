@@ -10,21 +10,34 @@
         })
     })
     $(document).on('change', 'select', () => {
-        var code = " "
+        var codes = []
 
         //again... lazy
         $('select').each((idx, select) => {
-            var val = $(select).val()
+            var vals = $(select).val()
             var or = $(select).hasClass('or')
-            if(val && val.length) { 
-                if(or) {
-                    code = val.length > 1 ? `${code} (${val.join(" OR ")})` : `${code} ${val}`
-                } else {
-                    code = val.length > 1 ? `${code} (${val.join(" AND ")})` : `${code} ${val}`
+            var multiple = vals.length > 1
+            var c = ''
+            $.each(vals, (idx, val) => {
+                var v = window[select.id].filter((v) => v.v == val)[0]
+                if(idx == 0 && multiple) {
+                    c += '('
                 }
-            }
-            if(val && val.length) {  }
+                c += `<span data-toggle="popover" data-content="${v.l}">${v.v}</span>`
+                if(or && idx != vals.length - 1 && multiple) {
+                    c += ' OR '
+                }
+                if(idx == vals.length - 1 && multiple) {
+                    c += ')'
+                }
+            })
+            codes.push(c)
         })
-        $("#output").text(`ItemDisplay[${code.trim()}]: %NAME%`)
+        $('#output').html(`ItemDisplay[${codes.join(' ').trim()}]: %NAME%`)
     })
+    $(document).popover({ 
+        selector: '[data-toggle=popover]',
+        trigger: 'hover',
+        placement: 'bottom'
+    });
 })(jQuery)
