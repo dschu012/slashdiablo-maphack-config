@@ -33,7 +33,7 @@
             })
             codes.push(c)
         })
-        $('#output').html(`ItemDisplay[${codes.join(' ').trim()}]: %NAME%`)
+        $('#output').html(`ItemDisplay[${codes.filter((c)=> c).join(' ').trim()}]: %NAME%`)
     })
     $(document).popover({ 
         selector: '[data-toggle=popover]',
