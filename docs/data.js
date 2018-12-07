@@ -668,6 +668,7 @@ var qualities = [
 ]
 
 var sockets = [
+{ l: "0", v: "SOCK=0" },
 { l: "1", v: "SOCK=1" },
 { l: "2", v: "SOCK=2" },
 { l: "3", v: "SOCK=3" },
